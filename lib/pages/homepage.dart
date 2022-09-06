@@ -11,6 +11,8 @@ class _HomePageState extends State<HomePage> {
   @override
   double _buttonRadius = 100;
 
+  final Tween<double> _backgroundScale = Tween<double>(begin: 0.0, end: 1.0);
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("Animations")),
@@ -27,8 +29,19 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _pageBackground() {
-    return Container(
-      color: Color.fromARGB(194, 48, 119, 50),
+    return TweenAnimationBuilder(
+      curve: Curves.easeInOutBack,
+      tween: _backgroundScale,
+      duration: const Duration(seconds: 2),
+      builder: ((_context, double _scale, _child) {
+        return Transform.scale(
+          scale: _scale,
+          child: _child,
+        );
+      }),
+      child: Container(
+        color: Color.fromARGB(194, 48, 119, 50),
+      ),
     );
   }
 
